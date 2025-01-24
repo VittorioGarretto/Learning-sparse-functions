@@ -62,7 +62,7 @@ def nn_model(depth: int, width: int, input_shape: int) -> Sequential:
     return model
 
 
-def nn_train(model: Sequential, dataset: tf.data.Dataset, lr: int, epochs: int) -> tuple[dict, Sequential]:
+def nn_train(model: Sequential, dataset: tf.data.Dataset, lr: float, epochs: int) -> tuple[dict, Sequential]:
     """
     Function to train a neural network model.
 
