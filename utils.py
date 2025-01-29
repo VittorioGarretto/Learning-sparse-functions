@@ -25,7 +25,7 @@ def load_data(dim: int, size: int, target: list,
     dataset (tf.data.Dataset): Dataset object for the input and target data.
     """
 
-    x = np.random.normal((size, dim))
+    x = np.random.normal(size=(size, dim))
     if msp:
         y = np.zeros(size)
         for i in range(1, len(target)+1):
