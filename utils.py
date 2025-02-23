@@ -4,7 +4,6 @@ import numpy as np
 import sklearn
 from keras import regularizers
 from sklearn import metrics
-from keras import layers, Sequential, Input
 
 
 def load_data(dim: int, size: int, target: list, 
@@ -38,50 +37,4 @@ def load_data(dim: int, size: int, target: list,
 
     return x, y, dataset
 
-
-def nn_model(depth: int, width: int, input_shape: int) -> Sequential:
-    """
-    Function to create a neural network model with a given depth, width and input shape. This model
-    is used in a regression task.
-
-    Parameters:
-    depth (int): Number of hidden layers in the model.
-    width (int): Number of neurons in each hidden layer.
-    input_shape (int): Number of features in the input data.
-
-    Returns:
-    model (keras.Sequential): Neural network model.
-    """
-
-    model = Sequential()
-    model.add(Input(shape=(input_shape,)))
-    for _ in range(depth):
-        model.add(layers.Dense(width, activation="relu", kernel_regularizer=regularizers.L1(l1=0.02)))
-    model.add(layers.Dense(1))
-
-    return model
-
-
-def nn_train(model: Sequential, dataset: tf.data.Dataset, lr: float, epochs: int) -> tuple[dict, Sequential]:
-    """
-    Function to train a neural network model.
-
-    Parameters:
-    model (keras.Sequential): Neural network model.
-    lr (int): Learning rate for the optimizer.
-    epochs (int): Number of epochs for training.
-
-    Returns:
-    metrics (dict): History of the model training.
-    model (keras.Sequential): Trained neural network model.
-    """
-
-    model.compile(optimizer=keras.optimizers.SGD(learning_rate=lr),
-                  loss="mean_squared_error",
-                  metrics=["mean_squared_error"])
-    
-    history = model.fit(dataset, epochs=epochs, verbose=0)
-    metrics = {"loss": history.history["loss"], "train_err": history.history["mean_squared_error"]}
-
-    return metrics, model
  
