@@ -37,4 +37,18 @@ def load_data(dim: int, size: int, target: list,
 
     return x, y, dataset
 
- 
+
+def create_neural_network(input_dim: int) -> keras.Sequential:
+    """Create a neural network with 2 hidden layers"""
+    model = keras.Sequential([
+        keras.layers.Dense(500, activation="relu", kernel_regularizer=regularizers.L1(l1=0.02), input_shape=(input_dim,)),
+        keras.layers.Dense(500, activation="relu", kernel_regularizer=regularizers.L1(l1=0.02)),
+        keras.layers.Dense(1)
+    ])
+    
+    model.compile(
+        optimizer=keras.optimizers.SGD(0.01),
+        loss='mean_squared_error',
+        metrics=['mean_squared_error']
+    )
+    return model
